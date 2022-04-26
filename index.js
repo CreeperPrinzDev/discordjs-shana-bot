@@ -4,6 +4,7 @@ const { Routes } = require("discord-api-types/v9")
 const fs = require("node:fs")
 const { Player } = require("discord-player")
 const dotenv = require("dotenv")
+const generateImage = require("./generateImage.js")
 
 dotenv.config();
 const TOKEN = process.env.TOKEN
@@ -17,6 +18,7 @@ const GUILD_ID = process.env.GUILD_ID
 const client = new Discord.Client ({
     intents: [
         "GUILDS",
+        "GUILD_MEMBERS",
         "GUILD_VOICE_STATES"
     ]
 })
@@ -59,6 +61,16 @@ if (LOAD_SLASH) {
         console.log(`Logged in as ${client.user.tag}`)
         client.user.setActivity("Shakugan no Shana", {type: "WATCHING"})
     })
+
+    const welcomeChannelId = "968557012852035614"
+
+    client.on("guildMemberAdd", async (member) => {
+        const img = await generateImage(member)
+        member.guild.channels.cache.get(welcomeChannelId).send({
+            files: [img]
+        })
+    })
+
     client.on("interactionCreate", (interaction) => {
         async function handleCommand() {
         if (!interaction.isCommand()) return    
