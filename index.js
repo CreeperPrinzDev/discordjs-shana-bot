@@ -14,7 +14,6 @@ const LOAD_SLASH = process.argv[2] == "load"
 const CLIENT_ID = process.env.CLIENT_ID
 const GUILD_ID = process.env.GUILD_ID
 
-
 const client = new Discord.Client ({
     intents: [
         "GUILDS",
@@ -69,6 +68,15 @@ if (LOAD_SLASH) {
         member.guild.channels.cache.get(welcomeChannelId).send({
             files: [img]
         })
+
+        //join role
+        try {
+            let role = member.guild.roles.cache.find(rl => rl.name === "neuer Sprecher")
+            member.roles.add(role)
+        } catch (error) {
+            console.log("Role does not exist in this guild")
+        }
+        
     })
 
     client.on("interactionCreate", (interaction) => {
