@@ -71,7 +71,7 @@ if (LOAD_SLASH) {
 
         //join role
         try {
-            let role = member.guild.roles.cache.find(rl => rl.name === "neuer Sprecher")
+            let role = member.guild.roles.cache.find(rl => rl.id === "961710432308043866")
             member.roles.add(role)
         } catch (error) {
             console.log("Role does not exist in this guild")
