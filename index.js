@@ -67,16 +67,7 @@ if (LOAD_SLASH) {
         const img = await generateImage(member)
         member.guild.channels.cache.get(welcomeChannelId).send({
             files: [img]
-        })
-
-        //join role
-        try {
-            let role = member.guild.roles.cache.find(rl => rl.id === "961710432308043866")
-            member.roles.add(role)
-        } catch (error) {
-            console.log("Role does not exist in this guild")
-        }
-        
+        })      
     })
 
     client.on("interactionCreate", (interaction) => {
